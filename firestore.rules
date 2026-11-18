@@ -1,0 +1,105 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function isString(value, max) {
+      return value is string && value.size() <= max;
+    }
+
+    // User profile document (auto-created/synced by the app)
+    match /users/{userId} {
+      allow read, create, update: if isOwner(userId);
+      allow delete: if false;
+    }
+
+    // Farm records owned by a user
+    match /farms/{farmId} {
+      allow read, delete: if signedIn() && resource.data.ownerId == request.auth.uid;
+      allow create: if signedIn()
+        && request.resource.data.ownerId == request.auth.uid
+        && isString(request.resource.data.name, 120);
+      allow update: if signedIn()
+        && resource.data.ownerId == request.auth.uid
+        && request.resource.data.ownerId == resource.data.ownerId
+        && isString(request.resource.data.name, 120);
+    }
+
+    // Individual pig records owned by a user (and linked to a farm)
+    match /pigs/{pigId} {
+      allow read, delete: if signedIn() && resource.data.ownerId == request.auth.uid;
+      allow create: if signedIn()
+        && request.resource.data.ownerId == request.auth.uid
+        && isString(request.resource.data.farmId, 120)
+        && isString(request.resource.data.pigId, 120);
+      allow update: if signedIn()
+        && resource.data.ownerId == request.auth.uid
+        && request.resource.data.ownerId == resource.data.ownerId;
+    }
+
+    // Screening records (detailed results + image metadata)
+    match /screenings/{screeningId} {
+      allow read, delete: if signedIn() && resource.data.ownerId == request.auth.uid;
+      allow create: if signedIn()
+        && request.resource.data.ownerId == request.auth.uid
+        && isString(request.resource.data.screeningId, 120)
+        && request.resource.data.predictedDisease is string
+        && request.resource.data.confidence is number;
+      allow update: if signedIn()
+        && resource.data.ownerId == request.auth.uid
+        && request.resource.data.ownerId == resource.data.ownerId;
+    }
+
+    // Generated reports/summaries per user
+    match /reports/{reportId} {
+      allow read, delete: if signedIn() && resource.data.ownerId == request.auth.uid;
+      allow create: if signedIn() && request.resource.data.ownerId == request.auth.uid;
+      allow update: if signedIn()
+        && resource.data.ownerId == request.auth.uid
+        && request.resource.data.ownerId == resource.data.ownerId;
+    }
+
+    // Legacy detection records (kept for backward compatibility)
+    match /detections/{detectionId} {
+      allow read, delete: if signedIn() && resource.data.userId == request.auth.uid;
+      allow create: if signedIn()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.label is string
+        && request.resource.data.confidence is number;
+      allow update: if signedIn()
+        && resource.data.userId == request.auth.uid
+        && request.resource.data.userId == resource.data.userId
+        && request.resource.data.label is string
+        && request.resource.data.confidence is number;
+    }
+
+    // Contact form messages. Anyone may submit a validated message, but only
+    // the Firebase console / Admin SDK can read them.
+    match /messages/{messageId} {
+      allow create: if request.resource.data.keys().hasAll([
+          'name', 'email', 'message', 'userId', 'createdAt'
+        ])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 120
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 200
+        && request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 5000
+        && request.resource.data.createdAt == request.time;
+      allow read, update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "cli": {
+    "version": ">= 27.10.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "channel": "development",
+      "env": {
+        "EXPO_PUBLIC_FIREBASE_API_KEY": "AIzaSyBKzKoMljDGU5ELbKPzskP2bJxBNLd8_QE",
+        "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN": "dermaswine-ai.firebaseapp.com",
+        "EXPO_PUBLIC_FIREBASE_PROJECT_ID": "dermaswine-ai",
+        "EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET": "dermaswine-ai.firebasestorage.app",
+        "EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "853604686653",
+        "EXPO_PUBLIC_FIREBASE_APP_ID": "1:853604686653:web:a44da5df30354196ca4354",
+        "EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID": "G-SYLXBWYP25",
+        "EXPO_PUBLIC_HISTORY_BACKEND": "local",
+        "EXPO_PUBLIC_ENABLE_IMAGE_STORAGE": "false",
+        "EXPO_PUBLIC_HF_SPACE_URL": "https://huggingface.co/spaces/johnnysins123/DdermaAI",
+        "EXPO_PUBLIC_HF_THRESHOLD": "0.5"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "channel": "preview",
+      "env": {
+        "EXPO_PUBLIC_FIREBASE_API_KEY": "AIzaSyBKzKoMljDGU5ELbKPzskP2bJxBNLd8_QE",
+        "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN": "dermaswine-ai.firebaseapp.com",
+        "EXPO_PUBLIC_FIREBASE_PROJECT_ID": "dermaswine-ai",
+        "EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET": "dermaswine-ai.firebasestorage.app",
+        "EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "853604686653",
+        "EXPO_PUBLIC_FIREBASE_APP_ID": "1:853604686653:web:a44da5df30354196ca4354",
+        "EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID": "G-SYLXBWYP25",
+        "EXPO_PUBLIC_HISTORY_BACKEND": "local",
+        "EXPO_PUBLIC_ENABLE_IMAGE_STORAGE": "false",
+        "EXPO_PUBLIC_HF_SPACE_URL": "https://huggingface.co/spaces/johnnysins123/DdermaAI",
+        "EXPO_PUBLIC_HF_THRESHOLD": "0.5"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "channel": "production",
+      "env": {
+        "EXPO_PUBLIC_FIREBASE_API_KEY": "AIzaSyBKzKoMljDGU5ELbKPzskP2bJxBNLd8_QE",
+        "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN": "dermaswine-ai.firebaseapp.com",
+        "EXPO_PUBLIC_FIREBASE_PROJECT_ID": "dermaswine-ai",
+        "EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET": "dermaswine-ai.firebasestorage.app",
+        "EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "853604686653",
+        "EXPO_PUBLIC_FIREBASE_APP_ID": "1:853604686653:web:a44da5df30354196ca4354",
+        "EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID": "G-SYLXBWYP25",
+        "EXPO_PUBLIC_HISTORY_BACKEND": "local",
+        "EXPO_PUBLIC_ENABLE_IMAGE_STORAGE": "false",
+        "EXPO_PUBLIC_HF_SPACE_URL": "https://huggingface.co/spaces/johnnysins123/DdermaAI",
+        "EXPO_PUBLIC_HF_THRESHOLD": "0.5"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

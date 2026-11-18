@@ -25,13 +25,22 @@ expo-env.d.ts
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+firebase-debug.log
+.firebase/
 
 # macOS
 .DS_Store
 *.pem
 
 # local env files
+.env
 .env*.local
+
+# trained YOLOv8 weights (large binaries)
+assets/models/*.onnx
+assets/models/*.pt
+backend/models/*.pt
+backend/models/*.onnx
 
 # typescript
 *.tsbuildinfo
@@ -39,3 +48,7 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# web/android export output
+dist-android/
+

@@ -1,0 +1,46 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function isImageUpload(maxMb) {
+      return request.resource.size < maxMb * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    // Legacy detection images
+    match /detections/{uid}/{allPaths=**} {
+      allow read, delete: if isOwner(uid);
+      allow create, update: if isOwner(uid) && isImageUpload(10);
+    }
+
+    // Screening images captured/uploaded for saved screenings
+    match /screenings/{uid}/{allPaths=**} {
+      allow read, delete: if isOwner(uid);
+      allow create, update: if isOwner(uid) && isImageUpload(10);
+    }
+
+    // User profile photos
+    match /users/{uid}/{allPaths=**} {
+      allow read, delete: if isOwner(uid);
+      allow create, update: if isOwner(uid) && isImageUpload(5);
+    }
+
+    // Farm-related images (optional)
+    match /farms/{uid}/{allPaths=**} {
+      allow read, delete: if isOwner(uid);
+      allow create, update: if isOwner(uid) && isImageUpload(10);
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

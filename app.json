@@ -1,24 +1,82 @@
 {
   "expo": {
-    "name": "derma-ai",
+    "name": "DermaSwine AI",
     "slug": "derma-ai",
     "version": "1.0.0",
     "orientation": "portrait",
+    "scheme": "dermaswineai",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dermaswine.ai",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "DermaSwine AI uses the camera to automatically capture swine skin frames for disease screening.",
+        "NSPhotoLibraryUsageDescription": "DermaSwine AI accesses photos to analyze swine skin images.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
+      "package": "com.dermaswine.ai",
+      "versionCode": 1,
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#DCFCE7",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       }
     },
     "web": {
+      "bundler": "metro",
+      "output": "static",
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#F8FAF7",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 240
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow DermaSwine AI to use the camera to automatically capture swine skin frames for disease screening.",
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow DermaSwine AI to access photos for swine skin image analysis.",
+          "cameraPermission": "Allow DermaSwine AI to use the camera to capture swine skin images.",
+          "microphonePermission": false
+        }
+      ]
+    ],
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "7fd5acec-467c-4dd3-ab6a-b6034b86654d"
+      }
+    },
+    "owner": "nocturnediesel",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/7fd5acec-467c-4dd3-ab6a-b6034b86654d"
     }
   }
 }
